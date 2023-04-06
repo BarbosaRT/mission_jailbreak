@@ -1,0 +1,4 @@
+player/idle/ 7;7;40 loop
+player/jump/ 7;10 direct
+player/run/ 7;7;7;7 loop
+player/damage/ 7;10 direct
