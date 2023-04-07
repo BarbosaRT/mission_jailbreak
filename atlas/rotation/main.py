@@ -2,6 +2,8 @@ import pygame
 from pygame.locals import *
 import sys
 
+from imports import load_image
+
 
 def rotate(pivot, orig_image, angle, width: float = 0, height: float = 0, pos=(0, 0)):
     if width == 0:
@@ -16,17 +18,6 @@ def rotate(pivot, orig_image, angle, width: float = 0, height: float = 0, pos=(0
     rot_image = pygame.transform.rotozoom(cop_image.convert_alpha(), angle, 1)
     rot_image_rect = rot_image.get_rect(center=pivot)
     return rot_image, rot_image_rect
-
-
-def load_image(loc, alpha=False):
-    try:
-        if alpha:
-            return pygame.image.load(loc).convert_alpha()
-        return pygame.image.load(loc).convert()
-    except FileNotFoundError:
-        print(f'arquivo no local {loc} nao encontrado')
-
-
 
 
 def main():

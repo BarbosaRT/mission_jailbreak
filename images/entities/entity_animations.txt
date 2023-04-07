@@ -1,4 +1,6 @@
-player/idle/ 7;7;40 loop
-player/jump/ 7;10 direct
-player/run/ 7;7;7;7 loop
+player/idle/ 10;20;20;10 loop
+player/jump/ 10;7;7;7;7;10 direct
+player/run/ 10;10;10;10 loop
 player/damage/ 7;10 direct
+frog/idle/ 7;7 loop
+frog/jump/ 10;10;10;10;10 direct

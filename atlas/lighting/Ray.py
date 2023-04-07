@@ -33,10 +33,10 @@ class Ray:
         self.angles = self.create_rays(self.lines, self.start_angle, self.fov)
 
         # Textures --------------------------------------------------------------------- #
-        self.texture1 = pygame.image.load('./atlas/assets/radial.png').convert_alpha()
+        self.texture1 = pygame.image.load('atlas/lighting/radial.png').convert_alpha()
         self.texture1.set_colorkey(0)
-        self.no_shadow_texture1 = pygame.Surface(size)
-        self.no_shadow_texture1.set_colorkey(0)
+        self.no_shadow_texture1 = pygame.Surface(size).convert_alpha()
+        # self.no_shadow_texture1.set_colorkey((0, 0, 0))
         self.texture2 = fill(self.texture1, self.color)
         self.texture = self.create_texture(self.texture2, [self.limit, self.limit])
 
@@ -52,15 +52,25 @@ class Ray:
             lines.append([angle, math.cos(angle), math.sin(angle)])
         return lines
 
+    """def return_surf(self, origin):
+        game_display = pygame.Surface(GAME_SIZE)
+        game_display.set_colorkey(0)
+        shoot_rays(origin, angles, LIMIT, TEXTURE, GAME_SIZE, NO_SHADOW_TEXTURE1, array, game_display)
+        return game_display"""
+
     def render(self, display: pygame.Surface, mask: pygame.Surface):
-        # mask_surface = pygame.mask.from_surface(mask).to_surface()
-        # array = pygame.surfarray.pixels2d(mask_surface).astype(dtype=numpy.int32)
+        mask_surface = pygame.mask.from_surface(mask).to_surface()
+        array = pygame.surfarray.pixels2d(mask_surface).astype(dtype=numpy.int32)
         # display.blit(mask_surface, (0, 0))
-        # shoot_rays(self.origin, self.angles, self.limit, self.texture, display.get_size(), self.no_shadow_texture1, array, display)
+        # shoot_rays(self.origin, self.angles, self.limit, self.texture, display.get_size(),
+        #            self.no_shadow_texture1, array, display)
+        # screen = pygame.Surface(display.get_size())
+        # screen.set_colorkey(0)
         # self.shoot_rays(array, self.angles, self.limit, self.texture, display.get_size(), display)
+        # display.blit(screen, (0, 0))
         display.blit(return_surf(self.origin), (0, 0))
 
-    """# As the name implies this function shoots the rays
+    # As the name implies this function shoots the rays
     def shoot_rays(self, array, angles, limit, texture, size, display=None):
         points = [self.origin]
         x, y = self.origin
@@ -76,8 +86,8 @@ class Ray:
             point = [int(self.origin[0] + line[1] * distance),
                      int(self.origin[1] + line[2] * distance)]
             points.append(point)
-        polygon = pygame.Surface(size)
+        polygon = pygame.Surface(size).convert_alpha()
         polygon.set_colorkey((0, 0, 0))
         pygame.gfxdraw.textured_polygon(polygon, points, self.no_shadow_texture1, 0, 0)
         if display:
-            display.blit(polygon, (0, 0), special_flags=pygame.BLEND_RGBA_ADD)"""
+            display.blit(polygon, (0, 0), special_flags=pygame.BLEND_RGBA_ADD)
