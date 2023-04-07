@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
-from UI.essentials import create_surf
-from UI.text import Text
+from atlas.UI.essentials import create_surf
+from atlas.UI.text import Text
 pygame.font.init()
 
 

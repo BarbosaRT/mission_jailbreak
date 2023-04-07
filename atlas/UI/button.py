@@ -1,6 +1,6 @@
 import pygame
-from UI.essentials import create_surf
-from UI.text import Text
+from atlas.UI.essentials import create_surf
+from atlas.UI.text import Text
 
 
 class Button:

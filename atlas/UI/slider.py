@@ -1,5 +1,5 @@
 import pygame
-from UI.essentials import create_surf
+from atlas.UI.essentials import create_surf
 
 
 class Slider:

@@ -19,15 +19,15 @@
             "scaleInEditor": 1
         },
         "teste.json": {
-            "scale": 2,
+            "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 766,
-                "y": 648.25
+                "x": 1352,
+                "y": 511
             }
         }
     },
-    "last.imagePath": "/home/ru/Projetos/Python/mission_jailbreak/images/tiles",
+    "last.imagePath": "/home/ru/Projetos/Python/mission_jailbreak/images/entities",
     "map.height": 100,
     "map.lastUsedFormat": "json",
     "map.renderOrder": null,

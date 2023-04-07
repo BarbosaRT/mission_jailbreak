@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 
-from imports import load_image
+from lib.imports import load_image
 
 
 def rotate(pivot, orig_image, angle, width: float = 0, height: float = 0, pos=(0, 0)):
