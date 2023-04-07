@@ -1,0 +1,49 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "teste.json",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "paleta.tsj": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "paleta.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "teste.json": {
+            "scale": 2,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 766,
+                "y": 648.25
+            }
+        }
+    },
+    "last.imagePath": "/home/ru/Projetos/Python/mission_jailbreak/images/tiles",
+    "map.height": 100,
+    "map.lastUsedFormat": "json",
+    "map.renderOrder": null,
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 300,
+    "openFiles": [
+        "teste.json",
+        "paleta.tsj"
+    ],
+    "project": "Mapa.tiled-project",
+    "recentFiles": [
+        "paleta.tsj",
+        "teste.json",
+        "paleta.tsx"
+    ],
+    "tileset.lastUsedFormat": "json",
+    "tileset.type": 1
+}
