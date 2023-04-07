@@ -4,9 +4,8 @@ import numpy
 import pygame
 from pygame.locals import *
 
-import engine
 from atlas.lighting.raycaster import shoot_ray
-from imports import load_image
+from lib.imports import load_image
 from math import *
 
 def aaline(surface, color, start_pos, end_pos, width=1):

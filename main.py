@@ -1,19 +1,20 @@
-import json
-
 import pygame
 import sys
 from pygame.locals import *
 
 from atlas.lighting.Ray import Ray
-from imports import load_pallete
+from lib.background import background
+from lib.imports import load_pallete
 from lib.camera import Camera
 from lib.checkpoint import Checkpoint
 from lib.frog import Frog
 # from UI import *
-from map import show_map, load_map
-from entities import Player, bullet_group
+from lib.map import show_map, load_map
+from lib.entities import Player, bullet_group
 import engine as e
 import time
+
+from lib.pickup_gun import PickupGun
 
 # PyGame Info ------------------------------------------------------ #
 WINDOWSIZE = (800, 600)
@@ -22,7 +23,7 @@ clock = pygame.time.Clock()
 pygame.display.set_caption('Template')
 GAME_SIZE = (WINDOWSIZE[0]/3, WINDOWSIZE[1]/3)
 game_display = pygame.Surface(GAME_SIZE)
-screen = pygame.display.set_mode(WINDOWSIZE, RESIZABLE)
+screen = pygame.display.set_mode(WINDOWSIZE)
 
 
 # Music -------------------------------- #
@@ -60,6 +61,8 @@ def update_entities(display_surface, mask_surface):
             entidade.update(display_surface, scroll, player)
         if type(entidade) == Frog:
             entidade.update(display_surface, scroll, dt, tile_rects, ramps_rects)
+        if type(entidade) == PickupGun:
+            entidade.update(display_surface, scroll, dt, player)
 
 
 def main():
@@ -85,11 +88,14 @@ def main():
                 pygame.quit()
                 sys.exit()
 
+        # Background ------------------------------------------------------------------------------------ #
+        background(game_display, scroll)
+
         # Level ----------------------------------------------------------------------------------------- #
         map_display, tile_rects, ramps_rects, mask_surface = show_map(game_display, mapa, tile_index, scroll,
                                                                       left_ramp='17', right_ramp='16')
         game_display.blit(map_display, (0, 0))
-        game_display.blit(mask, (0, 0), special_flags=BLEND_RGBA_MULT)
+        # game_display.blit(mask, (0, 0), special_flags=BLEND_RGBA_MULT)
 
         # Bullets ----------------------------------------------------------------------------------------------- #
         bullet_group.update(display=game_display, scroll=scroll, enemies=[])

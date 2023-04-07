@@ -1,8 +1,3 @@
-import pygame
-
-from imports import load_image
-
-
 class Checkpoint:
     def __init__(self, pos, image, dest):
         self.pos = pos
@@ -22,4 +17,3 @@ class Checkpoint:
             player.entity.set_pos(self.dest[0], self.dest[1])
 
         display.blit(self.image, local_pos)
-
