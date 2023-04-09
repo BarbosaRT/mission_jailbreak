@@ -15,5 +15,6 @@ class Checkpoint:
 
         if local_player_rect.colliderect(local_rect) and self.dest is not None:
             player.entity.set_pos(self.dest[0], self.dest[1])
+            player.checkpoint_pos = self.dest
 
         display.blit(self.image, local_pos)

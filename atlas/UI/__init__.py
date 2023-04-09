@@ -1,4 +1,4 @@
-import atlas.UI.slider as slider
+from atlas.UI import button, text, textfield, slider
 
 Button = button.Button
 Slider = slider.Slider

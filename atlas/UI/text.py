@@ -34,7 +34,7 @@ class Text:
 
     def write(self, input_text: str):
         label = []
-        text = input_text.split('\r')
+        text = input_text.split('\n')
         for line in text:
             label.append(self.font.render(line, self.antialias, self.color))
         self.label = label

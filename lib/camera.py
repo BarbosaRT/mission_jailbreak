@@ -2,11 +2,13 @@ import math
 
 import numpy
 import pygame
+import pygame.gfxdraw
 from pygame.locals import *
 
 from atlas.lighting.raycaster import shoot_ray
 from lib.imports import load_image
 from math import *
+
 
 def aaline(surface, color, start_pos, end_pos, width=1):
     """ Draws wide transparent anti-aliased lines. """
@@ -53,7 +55,7 @@ class Camera:
         self.time_passed = -20
         self.move = move
 
-    def update(self, display, scroll, dt, mask_surface, player_rect: pygame.rect.Rect):
+    def update(self, display, scroll, dt, mask_surface, player):
         self.dt = dt
         self.angle += dt / 120
         self.time_passed += dt
@@ -80,9 +82,10 @@ class Camera:
         # Calculates here it hits
         point = [int(center_pos[0] + math.cos(radians_angle) * distance),
                  int(center_pos[1] + math.sin(radians_angle) * distance)]
-
-        collsion_point = [int(center_pos[0] + math.cos(radians_angle) * (distance - 10)),
-                          int(center_pos[1] + math.sin(radians_angle) * (distance - 10))]
+        player_rect = player.rect
+        collsion_point = [int(center_pos[0] + math.cos(radians_angle) * distance),
+                          int(center_pos[1] + math.sin(radians_angle) * distance)]
+        collide_rect = pygame.Rect(collsion_point[0], collsion_point[1], 5, 5)
         local_player_rect = player_rect.copy()
         local_player_rect.x -= scroll[0]
         local_player_rect.y -= scroll[1] - 16
@@ -90,17 +93,19 @@ class Camera:
         is_showing = display.get_width() > center_pos[0] > -100 and display.get_height() > center_pos[1] > 0
 
         if self.time_passed > 200:
-            self.time_passed = -50
+            self.time_passed = -60
         if self.blink:
             if self.time_passed > 0:
                 if is_showing:
-                    self.isTouchingPlayer = local_player_rect.collidepoint(collsion_point[0], collsion_point[1])
+                    self.isTouchingPlayer = local_player_rect.colliderect(collide_rect)
                     pygame.draw.aaline(display, "red", center_pos, point)
                     aaline(display, Color(255, 0, 0, 50), center_pos, point, width=3)
 
         elif display.get_width() > center_pos[0] > -100 and display.get_height() > center_pos[1] > 0:
-            self.isTouchingPlayer = local_player_rect.collidepoint(collsion_point[0], collsion_point[1])
+            self.isTouchingPlayer = local_player_rect.colliderect(collide_rect)
             pygame.draw.aaline(display, "red", center_pos, point)
             aaline(display, Color(255, 0, 0, 50), center_pos, point, width=3)
 
+        if self.isTouchingPlayer and player.life > 0:
+            player.damage()
         display.blit(rot_image, local_pos)

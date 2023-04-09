@@ -1,33 +1,47 @@
+import math
+
 import pygame
 from pygame import Vector2
+import engine as e
+from lib.entities import bullet_group, Bullet
+from lib.imports import load_image
 
 
 class Guard:
-    def __init__(self, x, y, tag):
-        self.entity = e.entity(x, y, 32, 32, tag)
+    def __init__(self, x, y):
+        self.entity = e.entity(x, y, 32, 32, 'guard')
         self.collision_types = {}
         self.x = x
         self.y = y
         self.rect = self.entity.get_current_img().get_rect()
         self.life = 4
         self.gun_angle = 0
+        self.hit_sound = pygame.mixer.Sound('./audio/hit.wav')
+        self.hit_sound.set_volume(0.69)
         self.gun_pos = Vector2(0, 0)
         self.attack_frame = -1
         self.shooting = 0
+        self.damage_images = []
+        for _ in range(0, 16):
+            self.damage_images.append(load_image('images/entities/guard/damage/damage.png', True))
 
-    def attack(self):
-        self.attack_frame = 9
-        self.life -= 1
+    def damage(self):
+        if self.attack_frame < 0:
+            self.hit_sound.play()
+            self.attack_frame = 15
+            self.life -= 1
 
     def enemy_ia(self, scroll):
         # ATIRAR -------------------------------------------------------- #
         if self.shooting <= 0:
             self.gun_pos = [self.rect.centerx + scroll[0], self.rect.centery + scroll[1]]
-            enemies.append(Cannon_Ball(self.gun_pos, self.gun_angle, len(enemies)))
-            self.shooting = 20
-            cannon.set_action('fire', force=True)
+            bullet_group.add(Bullet([self.x + 6, self.y + 22], self.gun_angle + 180, self))
+            self.shooting = 10
 
     def update(self, display: pygame.Surface, scroll, player):
+        if self.life <= 0:
+            self.rect = pygame.Rect(0, 0, 0, 0)
+            return
         self.rect = self.entity.rect()
         self.rect.x -= scroll[0]
         self.rect.y -= scroll[1]
@@ -38,25 +52,20 @@ class Guard:
             if self.shooting > 0:
                 self.shooting -= 0.1
             else:
-                cannon.set_action('idle')
+                self.entity.set_action('idle')
 
-            gun_rect = self.rect.copy()
-            gun_copy = cannon.get_current_img().copy()
-            gun_rect.x += scroll[0]
-            gun_rect.y += scroll[1]
-            mx, my = player.x, player.y
-            rotated_gun, rotated_rect, self.gun_angle = rotate(gun_rect, gun_copy, mx, my, 1, 270)
-            self.gun_pos = rotated_rect
-            rotated_rect.y -= 5
-            cannon.change_frame(1)
+            self.entity.set_flip(player.x < self.x)
 
-            display.blit(rotated_gun, (rotated_rect.x - scroll[0], rotated_rect.y - scroll[1]))
+            mx, my = player.x - scroll[0], player.y - scroll[1] + 22
+
+            dx, dy = mx - self.rect.centerx, my - self.rect.centery
+            self.gun_angle = math.degrees(math.atan2(dx, dy)) - 92
 
         if self.attack_frame < 0:
             self.entity.display(display, scroll)
             self.entity.change_frame(1)
         else:
-            image = turret_damage[self.attack_frame]
+            image = self.damage_images[self.attack_frame]
             if player.x < self.entity.x:
                 image = pygame.transform.flip(image, True, False)
             display.blit(image, (self.x - scroll[0], self.y - scroll[1]))

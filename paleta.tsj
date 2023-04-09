@@ -8,7 +8,7 @@
  "margin":0,
  "name":"paleta",
  "spacing":0,
- "tilecount":30,
+ "tilecount":46,
  "tiledversion":"1.10.1",
  "tileheight":48,
  "tiles":[
@@ -191,6 +191,102 @@
          "image":"images\/entities\/enemy_down.png",
          "imageheight":32,
          "imagewidth":32
+        }, 
+        {
+         "id":33,
+         "image":"images\/tiles\/enemy_spawnpoint.png",
+         "imageheight":16,
+         "imagewidth":16
+        }, 
+        {
+         "id":34,
+         "image":"images\/tiles\/middle.png",
+         "imageheight":16,
+         "imagewidth":16
+        }, 
+        {
+         "id":35,
+         "image":"images\/tiles\/middle_right.png",
+         "imageheight":16,
+         "imagewidth":16
+        }, 
+        {
+         "id":36,
+         "image":"images\/tiles\/middle_left.png",
+         "imageheight":16,
+         "imagewidth":16
+        }, 
+        {
+         "id":40,
+         "image":"images\/tiles\/respawn.png",
+         "imageheight":16,
+         "imagewidth":16
+        }, 
+        {
+         "id":41,
+         "image":"images\/tiles\/dirt.png",
+         "imageheight":16,
+         "imagewidth":16
+        }, 
+        {
+         "id":42,
+         "image":"images\/tiles\/grass.png",
+         "imageheight":16,
+         "imagewidth":16
+        }, 
+        {
+         "id":43,
+         "image":"images\/tiles\/end.png",
+         "imageheight":16,
+         "imagewidth":16
+        }, 
+        {
+         "id":44,
+         "image":"images\/tiles\/fundo\/grade_left.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":45,
+         "image":"images\/tiles\/fundo\/grade_right.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":46,
+         "image":"images\/tiles\/fundo\/full_frame.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":47,
+         "image":"images\/tiles\/fundo\/full_grade_left.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":48,
+         "image":"images\/tiles\/fundo\/full_grade_right.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":49,
+         "image":"images\/tiles\/fundo\/up_grade_left.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":50,
+         "image":"images\/tiles\/fundo\/up_grade_right.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":51,
+         "image":"images\/tiles\/extras\/bulb.png",
+         "imageheight":16,
+         "imagewidth":16
         }],
  "tilewidth":32,
  "type":"tileset",

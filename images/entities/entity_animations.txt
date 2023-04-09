@@ -1,6 +1,10 @@
 player/idle/ 10;20;20;10 loop
-player/jump/ 10;7;7;7;7;10 direct
-player/run/ 10;10;10;10 loop
+player/gun_idle/ 10;20;20;10 loop
+player/jump_right/ 10;7;7;7;7;10 direct
+player/jump_left/ 10;7;7;7;7;10 direct
+player/run/ 15;15;15;15 loop
+player/gun_run/ 10;10;10;10 loop
 player/damage/ 7;10 direct
 frog/idle/ 7;7 loop
 frog/jump/ 10;10;10;10;10 direct
+guard/idle/ 10;20;20;10 loop
