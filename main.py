@@ -4,8 +4,7 @@ import pygame
 import sys
 from pygame.locals import *
 
-from atlas.lighting import Ray
-from atlas.lighting.bulb import Bulb
+from atlas.lighting.Ray import Ray
 from lib.dialogue import Dialogue
 
 # PyGame Info ------------------------------------------------------ #
@@ -22,6 +21,7 @@ from lib.background import background, background_2
 from lib.imports import load_pallete, load_image
 from lib.camera import Camera
 from lib.checkpoint import Checkpoint
+from lib.pickup_gun import PickupGun
 from lib.frog import Frog
 from lib.guard import Guard
 from lib.intro import intro
@@ -32,7 +32,6 @@ from lib.player import Player
 import engine as e
 import time
 
-from lib.pickup_gun import PickupGun
 
 # Animations --------------------------- #
 icon = load_image('images/icon.png', True)
@@ -40,7 +39,7 @@ pygame.display.set_icon(icon)
 e.load_animations('images/entities/')
 
 # Map ------------------------ #
-mapa, entidades, fundo = load_map('teste.json')
+mapa, entidades, fundo = load_map('map.json')
 tile_index = load_pallete('paleta.tsj')
 scroll = [700, 3200]
 
@@ -74,10 +73,8 @@ def update_entities(display_surface, mask_surface):
     global player
     enemies = []
     for entidade in entidades:
-        if type(entidade) == Bulb:
-            entidade.update(display_surface, scroll, mask_surface)
         if type(entidade) == Ray:
-            entidade.update(display_surface, scroll, mask_surface)
+            entidade.render(display_surface, mask_surface, scroll)
 
         if type(entidade) == Camera:
             player_mask = pygame.mask.from_surface(player.entity.get_current_img()).to_surface()
@@ -181,7 +178,6 @@ def game_loop():
         if player.final and is_fadein:
             dialogue_enabled = v >= 280
             mask.set_alpha(v)
-            player.entity.set_action('run')
         elif is_fadein and time_passed > 10:
             value = (time_passed - 10) * (time_passed - 10) * 2
             if 255 - value > 0:
@@ -192,7 +188,6 @@ def game_loop():
                 is_fadein = False
                 has_faded_music = True
         game_display.blit(mask, (0, 0), special_flags=BLEND_ALPHA_SDL2)
-
 
         # Display --------------------------------------------------------------------------------------- #
         gd = pygame.transform.scale(game_display, (screen.get_width(), screen.get_height()))

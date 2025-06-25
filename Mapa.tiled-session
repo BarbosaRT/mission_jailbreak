@@ -3,11 +3,20 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "teste.json",
+    "activeFile": "",
     "expandedProjectPaths": [
         "."
     ],
+    "file.lastUsedOpenFilter": "Todos os Ficheiros (*)",
     "fileStates": {
+        "map.json": {
+            "scale": 0.75,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 2254,
+                "y": 652
+            }
+        },
         "paleta.tsj": {
             "dynamicWrapping": true,
             "scaleInDock": 1,
@@ -19,11 +28,11 @@
             "scaleInEditor": 1
         },
         "teste.json": {
-            "scale": 1.5,
-            "selectedLayer": 1,
+            "scale": 2,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 1913.6666666666665,
-                "y": 684.3333333333333
+                "x": 797.75,
+                "y": 3164.25
             }
         }
     },
@@ -35,12 +44,11 @@
     "map.tileWidth": 16,
     "map.width": 300,
     "openFiles": [
-        "teste.json",
-        "paleta.tsj"
     ],
     "project": "Mapa.tiled-project",
     "recentFiles": [
         "paleta.tsj",
+        "map.json",
         "teste.json",
         "paleta.tsx"
     ],

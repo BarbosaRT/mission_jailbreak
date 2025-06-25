@@ -1,7 +1,7 @@
 import pygame
 import json
 
-from atlas.lighting.bulb import Bulb
+from atlas.lighting.Ray import Ray
 from lib.camera import Camera
 from lib.checkpoint import Checkpoint
 from lib.guard import Guard
@@ -72,7 +72,7 @@ def get_entities(d):
             if value == 34:
                 f_entities.append(Guard(x=j * TILE_SIZE, y=(y - 0.5) * TILE_SIZE))
             if value == 52:
-                f_entities.append(Bulb(pos=(j * TILE_SIZE, (y + 1) * TILE_SIZE)))
+                f_entities.append(Ray(origin=(j * TILE_SIZE, (y + 1) * TILE_SIZE)))
 
     return f_entities
 

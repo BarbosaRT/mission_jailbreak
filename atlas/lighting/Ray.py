@@ -1,13 +1,13 @@
 import math
-
+from pygame.locals import *
 import numpy
 import pygame
 import pygame.gfxdraw
 
-from atlas.lighting.demo import shoot_rays, return_surf
 from atlas.lighting.raycaster import shoot_ray
 
 pygame.init()
+ORANGE = pygame.Color(205, 105, 0)
 
 
 def fill(surf, color):
@@ -22,8 +22,32 @@ def fill(surf, color):
     return surface
 
 
+def shoot_rays(origin, lines, limit, texture, size, shadow, a, display):
+    points = [origin]
+    x, y = origin
+    texture_rect = pygame.Rect(0, 0, texture.get_width(), texture.get_height())
+    texture_rect.center = origin
+    shadow.fill((0, 0, 0))
+    shadow.blit(texture, texture_rect)
+
+    for line in lines:
+        # Calculates the distance
+        distance = shoot_ray(x, y, line[0], limit, a, 1)
+        # Calculates here it hits
+        point = [int(origin[0] + line[1] * distance),
+                 int(origin[1] + line[2] * distance)]
+        # print(distance)
+        # pygame.draw.circle(display, "red", point, 2)
+        points.append(point)
+    polygon = pygame.Surface(size)
+    polygon.set_colorkey((0, 0, 0))
+    pygame.gfxdraw.textured_polygon(polygon, points, shadow, 0, 0)
+    if display:
+        display.blit(polygon, (0, 0), special_flags=BLEND_RGBA_ADD)
+
+
 class Ray:
-    def __init__(self, origin, fov, start_angle, color, size, lines=1800, limit=100):
+    def __init__(self, origin, fov=60, start_angle=60, color=ORANGE, size=(320, 240), lines=100, limit=1000):
         self.limit = limit
         self.fov = fov
         self.start_angle = start_angle
@@ -33,10 +57,10 @@ class Ray:
         self.angles = self.create_rays(self.lines, self.start_angle, self.fov)
 
         # Textures --------------------------------------------------------------------- #
-        self.texture1 = pygame.image.load('atlas/lighting/radial.png').convert_alpha()
+        self.texture1 = pygame.image.load('./atlas/assets/radial.png').convert_alpha()
         self.texture1.set_colorkey(0)
-        self.no_shadow_texture1 = pygame.Surface(size).convert_alpha()
-        # self.no_shadow_texture1.set_colorkey((0, 0, 0))
+        self.no_shadow_texture1 = pygame.Surface(size)
+        self.no_shadow_texture1.set_colorkey(0)
         self.texture2 = fill(self.texture1, self.color)
         self.texture = self.create_texture(self.texture2, [self.limit, self.limit])
 
@@ -52,42 +76,20 @@ class Ray:
             lines.append([angle, math.cos(angle), math.sin(angle)])
         return lines
 
-    """def return_surf(self, origin):
-        game_display = pygame.Surface(GAME_SIZE)
-        game_display.set_colorkey(0)
-        shoot_rays(origin, angles, LIMIT, TEXTURE, GAME_SIZE, NO_SHADOW_TEXTURE1, array, game_display)
-        return game_display"""
+    def render(self, display: pygame.Surface, mask: pygame.Surface, scroll):
+        size = display.get_size()
+        array = pygame.surfarray.pixels2d(mask).astype(dtype=numpy.int32)
 
-    def render(self, display: pygame.Surface, mask: pygame.Surface):
-        mask_surface = pygame.mask.from_surface(mask).to_surface()
-        array = pygame.surfarray.pixels2d(mask_surface).astype(dtype=numpy.int32)
-        # display.blit(mask_surface, (0, 0))
-        # shoot_rays(self.origin, self.angles, self.limit, self.texture, display.get_size(),
-        #            self.no_shadow_texture1, array, display)
-        # screen = pygame.Surface(display.get_size())
-        # screen.set_colorkey(0)
-        # self.shoot_rays(array, self.angles, self.limit, self.texture, display.get_size(), display)
-        # display.blit(screen, (0, 0))
-        display.blit(return_surf(self.origin), (0, 0))
+        # THIS NEEDS TO BE INTEGER
+        pos = (int((self.origin[0] - scroll[0])), int((self.origin[1] - scroll[1])))
 
-    # As the name implies this function shoots the rays
-    def shoot_rays(self, array, angles, limit, texture, size, display=None):
-        points = [self.origin]
-        x, y = self.origin
-        texture_rect = pygame.Rect(0, 0, texture.get_width(), texture.get_height())
-        texture_rect.center = self.origin
-        self.no_shadow_texture1.fill((0, 0, 0))
-        self.no_shadow_texture1.blit(texture, texture_rect)
+        self.limit = int(math.sqrt(math.pow(size[0], 2) + math.pow(size[1], 2)))
 
-        for line in angles:
-            # Calculates the distance
-            distance = shoot_ray(x, y, line[0], limit, array, 1)
-            # Calculates here it hits
-            point = [int(self.origin[0] + line[1] * distance),
-                     int(self.origin[1] + line[2] * distance)]
-            points.append(point)
-        polygon = pygame.Surface(size).convert_alpha()
-        polygon.set_colorkey((0, 0, 0))
-        pygame.gfxdraw.textured_polygon(polygon, points, self.no_shadow_texture1, 0, 0)
-        if display:
-            display.blit(polygon, (0, 0), special_flags=pygame.BLEND_RGBA_ADD)
+        rect = pygame.Rect(pos[0], pos[1], 50, 50)
+        display_r = display.get_rect()
+
+        # THIS NEEDS TO BE INSIDE THE SCREEN
+        if display_r.colliderect(rect):
+            shoot_rays(pos, self.angles, self.limit, self.texture, display.get_size(), self.no_shadow_texture1,
+                       array, display)
+

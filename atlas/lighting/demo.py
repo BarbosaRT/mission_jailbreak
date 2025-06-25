@@ -26,7 +26,7 @@ LIMIT = int(math.sqrt(math.pow(GAME_SIZE[0], 2) + math.pow(GAME_SIZE[1], 2)))  #
 BORDERS = 0  # The size of the circle borders
 ACCURACY = 1  # Bigger values, less accuracy
 CIRCLES = 5  # Number of circles to be drawn
-NUM_LINES = 360  # Number of lines
+NUM_LINES = 7200  # Number of lines
 DRAW_LINES = False  # Draws the ray lines
 ORIGIN = [400, 300]
 FOV = 90
@@ -62,7 +62,7 @@ angles = create_rays(NUM_LINES, START_ANGLE, FOV)
 bulb = create_rays(360, 0, 361)
 
 # Textures --------------------------------------------------------------------- #
-TEXTURE1 = pygame.image.load('./atlas/assets/radial.png').convert_alpha()
+TEXTURE1 = pygame.image.load('../assets/radial.png').convert_alpha()
 NO_SHADOW_TEXTURE1 = pygame.Surface(GAME_SIZE)
 
 TEXTURE2 = fill(TEXTURE1, ORANGE)
@@ -154,6 +154,7 @@ def main():
         # origin = [400, 100]
         origin = pygame.mouse.get_pos()
         ORIGIN = origin
+        # THIS NEEDS TO BE INTEGER or else it won't work
         origin = (int(origin[0] * scale[0]), int(origin[1] * scale[1]))
 
         # Shoot Rays
